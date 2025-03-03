@@ -28,7 +28,6 @@
             loadReviews();
             setInterval(loadReviews, 5000); // Refresh reviews every 5 seconds
         });
-
     </script>
 
     <!-- font awesome cdn link -->
@@ -322,7 +321,7 @@
     <div class="box-container">
         <?php
         // Database connection
-        $conn = new mysqli("localhost", "root", "", "shopycloud");
+        $conn = new mysqli("localhost", "root", "jignesh@6278", "shopycloud");
 
         // Check connection
         if ($conn->connect_error) {

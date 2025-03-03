@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root"; // Change this if needed
-$password = ""; // Change if you set a password
+$password = "jignesh@6278"; // Change if you set a password
 $database = "shopycloud"; // Change this
 
 $conn = new mysqli($servername, $username, $password, $database);

@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost"; // Default for XAMPP & local MySQL
 $username = "root"; // Default for XAMPP & local MySQL
-$password = ""; // XAMPP has no default password, leave blank
+$password = "jignesh@6278"; // XAMPP has no default password, leave blank
 $dbname = "shopycloud"; // Name of database you created
 
 // Create connection
