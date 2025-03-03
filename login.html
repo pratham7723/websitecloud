@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ShopyCloud</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url('playstation-pattern.webp');
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .maincontainer_outer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ath_monkey_login {
+            width: 350px;
+            height: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgb(255, 255, 255, 95%);
+            border-radius: 40px;
+            padding-bottom: 20px;
+        }
+
+        .ath_monkey_img_outer {
+            background-color: white;
+            overflow: hidden;
+            margin-top: 20px;
+            height: 170px;
+            width: 170px;
+            border-radius: 50%;
+            background-image: url('monkey.gif');
+            background-size: 90% 85%;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .ath_monkey_img_outer img {
+            margin-top: 110%;
+            height: 170px;
+            width: 170px;
+            transition: 1s;
+        }
+
+        .form_outer {
+            margin-top: 38px;
+        }
+
+        .ath_login {
+            height: 40px;
+            width: 300px;
+            border-radius: 20px;
+            border: none;
+            color: #5a5449;
+            text-indent: 15px;
+            font-size: 100%;
+            box-shadow: 0 0px 15px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .ath_login::placeholder {
+            color: lightgrey;
+            font-size: 100%;
+            font-weight: lighter;
+            text-indent: 15px;
+        }
+
+        .sbutton {
+            height: 40px;
+            width: 300px;
+            margin-top: 10px;
+            background-color: #1b8c1b66;
+            border: none;
+            color: white;
+            font-weight: bolder;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .sbutton:hover {
+            color: #5a5449;
+        }
+
+        .footer {
+            color: #5a5449;
+            font-weight: lighter;
+            margin-top: 40px;
+        }
+
+        .password_inpt_outer {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .pass_show {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .d-none {
+            display: none;
+        }
+        header{
+    position: fixed;
+    top:0; left:0; right:0;
+    background:#fff;
+    padding:0.5rem 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+}
+
+header .logo{
+    font-size: 3rem;
+    color:#333;
+    font-weight: bolder;
+}
+
+header .navbar a{
+    font-size: 1.5rem;
+    padding:0 1.5rem;
+    color:#666;
+}
+
+header .navbar a:hover{
+    color:cadetblue;
+}
+
+header .icons a{
+    font-size: 1.5rem;
+    color:#333;
+    margin-left: 1.5rem;
+}
+
+header .icons a:hover{
+    color:cadetblue;
+}
+
+header #toggler{
+    display: none;
+}
+
+header .fa-bars{
+    font-size: 1.5rem;
+    color:#333;
+    border-radius: .5rem;
+    padding:.5rem 1.5rem;
+    cursor: pointer;
+    border:.1rem solid rgba(0,0,0,.3);
+    display: none;
+}
+    </style>
+</head>
+<body>
+    <!-- header section starts  -->
+
+    <header class="animate">
+        <input type="checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+    
+        <a href="index.php" class="logo"><img src="shopy cloud logo.png" height="70px" width="120px"></a>
+    
+        <nav class="navbar">
+            <a href="index.php#home">home</a>
+            <a href="index.php#about">about</a>
+            <a href="index.php#products">products</a>
+            <a href="index.php#reviews">reviews</a>
+            <a href="contact.html">contact</a>
+            <a href="F&Q.html">F&Q</a>
+        </nav>
+    
+        <div class="icons">
+            <a href="#" class="fas fa-heart"></a>
+            <a href="#" class="fas fa-shopping-cart"></a>
+            <a href="login.html" class="fas fa-user"></a>
+        </div>
+    
+    </header>
+
+<!-- header section ends -->
+
+    <div class="maincontainer_outer">
+        <div class="ath_monkey_login">
+            <div class="ath_monkey_img_outer" id="ath_monkey_img_outer">
+                <img id="hands" src="hands.png" alt="Monkey Hands">
+            </div>
+            <div class="form_outer">
+                <form action="login.php" method="POST">
+                    <input type="email" id="mail" name="email" onfocus="openeye();" class="ath_login" placeholder="Email" required>
+                    <br><br>
+                    <div class="password_inpt_outer">
+                        <input type="password" id="pwdbar" onfocus="closeye();" name="password" class="ath_login" placeholder="Password" required>
+                        <span class="pass_show" onmousedown="password_show_hide();" onmouseup="password_show_hide();">
+                            <i class="fas fa-eye" id="show_eye"></i>
+                            <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                        </span>
+                    </div>
+                    <br><br>
+                    <input type="submit" class="sbutton ath_login" value="L O G I N">
+                </form>
+            </div>
+            <footer class="footer">
+                <a href="signup.html" style="color: #4f76f5; text-decoration: none;">Create New Account</a>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        var x = document.getElementById("hands");
+        var y = document.getElementById("ath_monkey_img_outer");
+
+        function closeye() {
+            y.style.backgroundImage = "url('monkey_pwd.gif')";
+            x.style.marginTop = "0%";
+        }
+
+        function openeye() {
+            y.style.backgroundImage = "url('monkey.gif')";
+            x.style.marginTop = "110%";
+        }
+
+        function password_show_hide() {
+            var pass = document.getElementById("pwdbar");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+
+            if (pass.type === "password") {
+                openeye();
+                pass.type = "text";
+                show_eye.classList.add("d-none");
+                hide_eye.classList.remove("d-none");
+            } else {
+                closeye();
+                pass.type = "password";
+                show_eye.classList.remove("d-none");
+                hide_eye.classList.add("d-none");
+            }
+        }
+    </script>
+
+</body>
+</html>
