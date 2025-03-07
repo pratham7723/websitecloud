@@ -30,8 +30,8 @@ Shopy Cloud is an AI-powered e-commerce platform deployed on an Azure Ubuntu Vir
 ### Steps to Deploy
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-repo/shopycloud.git
-   cd shopycloud
+   git clone https://github.com/pratham7723/websitecloud
+   cd websitecloud
    ```
 2. **Set Up MySQL Database**
    ```sql
