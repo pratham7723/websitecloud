@@ -18,43 +18,30 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Handle User Addition
-if (isset($_POST['add_user'])) {
+// Handle User Update
+if (isset($_POST['update_user'])) {
+    $user_id = $_POST['user_id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
-    mysqli_query($conn, "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')");
+    mysqli_query($conn, "UPDATE users SET name='$name', email='$email', role='$role' WHERE id=$user_id");
     header("Location: admin.php");
     exit();
 }
 
-// Handle Product Addition with Image Upload
-if (isset($_POST['add_product'])) {
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['product_price'];
-    $image = $_FILES['product_image']['name'];
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($image);
-    move_uploaded_file($_FILES['product_image']['tmp_name'], $target_file);
-    
-    mysqli_query($conn, "INSERT INTO products (name, price, image) VALUES ('$product_name', '$product_price', '$target_file')");
+// Handle Review Update
+if (isset($_POST['update_review'])) {
+    $review_id = $_POST['review_id'];
+    $review = $_POST['review'];
+    $rating = $_POST['rating'];
+    mysqli_query($conn, "UPDATE reviews SET review='$review', rating='$rating' WHERE id=$review_id");
     header("Location: admin.php");
     exit();
 }
 
-// Handle Product Price Update
-if (isset($_POST['update_price'])) {
-    $product_id = $_POST['product_id'];
-    $new_price = $_POST['new_price'];
-    mysqli_query($conn, "UPDATE products SET price='$new_price' WHERE id=$product_id");
-    header("Location: admin.php");
-    exit();
-}
-
-// Fetch users and products safely
+// Fetch users and reviews safely
 $users = mysqli_query($conn, "SELECT id, name, email, role FROM users") or die(mysqli_error($conn));
-$products = mysqli_query($conn, "SELECT id, name, price, image FROM products") or die(mysqli_error($conn));
+$reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM reviews") or die(mysqli_error($conn));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +58,6 @@ $products = mysqli_query($conn, "SELECT id, name, price, image FROM products") o
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         th { background-color: #007bff; color: white; }
         button { padding: 5px 10px; cursor: pointer; background: #007bff; color: white; border: none; }
-        img { max-width: 100px; height: auto; }
     </style>
 </head>
 <body>
@@ -79,50 +65,58 @@ $products = mysqli_query($conn, "SELECT id, name, price, image FROM products") o
     <a href="#" class="logo"><img src="shopy cloud logo.png" height="70px" width="120px"></a>
     <nav class="navbar">
         <a href="index.php">Home</a>
-        <a href="#products">Products</a>
         <a href="logout.php">Logout</a>
     </nav>
 </header>
 
 <div class="container">
     <h2>Admin Dashboard</h2>
-    
-    <h3>Add User</h3>
-    <form method="post">
-        <input type="text" name="name" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <select name="role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        <button type="submit" name="add_user">Add User</button>
-    </form>
 
-    <h3>Add Product</h3>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="product_name" placeholder="Product Name" required>
-        <input type="number" name="product_price" placeholder="Price" required>
-        <input type="file" name="product_image" accept="image/*" required>
-        <button type="submit" name="add_product">Add Product</button>
-    </form>
-
-    <h3>Update Product Price</h3>
+    <h3>Manage Users</h3>
     <table>
         <tr>
-            <th>ID</th><th>Product Name</th><th>Current Price</th><th>Image</th><th>New Price</th><th>Action</th>
+            <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Action</th>
         </tr>
-        <?php while ($product = mysqli_fetch_assoc($products)) { ?>
+        <?php while ($user = mysqli_fetch_assoc($users)) { ?>
             <tr>
-                <td><?= htmlspecialchars($product['id']) ?></td>
-                <td><?= htmlspecialchars($product['name']) ?></td>
-                <td>₹<?= htmlspecialchars($product['price']) ?></td>
-                <td><img src="<?= htmlspecialchars($product['image']) ?>" alt="Product Image"></td>
+                <td><?= htmlspecialchars($user['id']) ?></td>
+                <td><?= htmlspecialchars($user['name']) ?></td>
+                <td><?= htmlspecialchars($user['email']) ?></td>
+                <td><?= htmlspecialchars($user['role']) ?></td>
                 <td>
                     <form method="post">
-                        <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
-                        <input type="number" name="new_price" placeholder="New Price" required>
-                        <button type="submit" name="update_price">Update</button>
+                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
+                        <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required>
+                        <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+                        <select name="role">
+                            <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>User</option>
+                            <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
+                        </select>
+                        <button type="submit" name="update_user">Update</button>
+                    </form>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+
+    <h3>Manage Reviews</h3>
+    <table>
+        <tr>
+            <th>ID</th><th>Name</th><th>Email</th><th>Review</th><th>Rating</th><th>Action</th>
+        </tr>
+        <?php while ($review = mysqli_fetch_assoc($reviews)) { ?>
+            <tr>
+                <td><?= htmlspecialchars($review['id']) ?></td>
+                <td><?= htmlspecialchars($review['name']) ?></td>
+                <td><?= htmlspecialchars($review['email']) ?></td>
+                <td><?= htmlspecialchars($review['review']) ?></td>
+                <td><?= htmlspecialchars($review['rating']) ?></td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="review_id" value="<?= htmlspecialchars($review['id']) ?>">
+                        <textarea name="review" required><?= htmlspecialchars($review['review']) ?></textarea>
+                        <input type="number" name="rating" value="<?= htmlspecialchars($review['rating']) ?>" min="1" max="5" required>
+                        <button type="submit" name="update_review">Update</button>
                     </form>
                 </td>
             </tr>
