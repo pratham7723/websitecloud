@@ -18,13 +18,35 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Handle User Update
-if (isset($_POST['update_user'])) {
-    $user_id = $_POST['user_id'];
+// Handle User Addition
+if (isset($_POST['add_user'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
-    mysqli_query($conn, "UPDATE users SET name='$name', email='$email', role='$role' WHERE id=$user_id");
+    
+    mysqli_query($conn, "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')");
+    header("Location: admin.php");
+    exit();
+}
+
+// Handle Review Addition
+if (isset($_POST['add_review'])) {
+    $review_name = $_POST['review_name'];
+    $review_email = $_POST['review_email'];
+    $review_text = $_POST['review_text'];
+    $review_rating = $_POST['review_rating'];
+
+    mysqli_query($conn, "INSERT INTO reviews (name, email, review, rating) VALUES ('$review_name', '$review_email', '$review_text', '$review_rating')");
+    header("Location: admin.php");
+    exit();
+}
+
+// Handle User Role Update
+if (isset($_POST['update_role'])) {
+    $user_id = $_POST['user_id'];
+    $new_role = $_POST['role'];
+    mysqli_query($conn, "UPDATE users SET role='$new_role' WHERE id=$user_id");
     header("Location: admin.php");
     exit();
 }
@@ -32,9 +54,16 @@ if (isset($_POST['update_user'])) {
 // Handle Review Update
 if (isset($_POST['update_review'])) {
     $review_id = $_POST['review_id'];
-    $review = $_POST['review'];
-    $rating = $_POST['rating'];
-    mysqli_query($conn, "UPDATE reviews SET review='$review', rating='$rating' WHERE id=$review_id");
+    $updated_review = $_POST['updated_review'];
+    mysqli_query($conn, "UPDATE reviews SET review='$updated_review' WHERE id=$review_id");
+    header("Location: admin.php");
+    exit();
+}
+
+// Handle Review Deletion
+if (isset($_POST['delete_review'])) {
+    $review_id = $_POST['review_id'];
+    mysqli_query($conn, "DELETE FROM reviews WHERE id=$review_id");
     header("Location: admin.php");
     exit();
 }
@@ -43,6 +72,7 @@ if (isset($_POST['update_review'])) {
 $users = mysqli_query($conn, "SELECT id, name, email, role FROM users") or die(mysqli_error($conn));
 $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM reviews") or die(mysqli_error($conn));
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,10 +102,24 @@ $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM revi
 <div class="container">
     <h2>Admin Dashboard</h2>
 
+    <!-- Add User -->
+    <h3>Add User</h3>
+    <form method="post">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <select name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button type="submit" name="add_user">Add User</button>
+    </form>
+
+    <!-- Manage Users -->
     <h3>Manage Users</h3>
     <table>
         <tr>
-            <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Action</th>
+            <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Update Role</th>
         </tr>
         <?php while ($user = mysqli_fetch_assoc($users)) { ?>
             <tr>
@@ -86,23 +130,32 @@ $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM revi
                 <td>
                     <form method="post">
                         <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
-                        <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required>
-                        <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
                         <select name="role">
                             <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>User</option>
                             <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
                         </select>
-                        <button type="submit" name="update_user">Update</button>
+                        <button type="submit" name="update_role">Update</button>
                     </form>
                 </td>
             </tr>
         <?php } ?>
     </table>
 
+    <!-- Add Review -->
+    <h3>Add Review</h3>
+    <form method="post">
+        <input type="text" name="review_name" placeholder="Name" required>
+        <input type="email" name="review_email" placeholder="Email" required>
+        <textarea name="review_text" placeholder="Review" required></textarea>
+        <input type="number" name="review_rating" min="1" max="5" placeholder="Rating (1-5)" required>
+        <button type="submit" name="add_review">Add Review</button>
+    </form>
+
+    <!-- Manage Reviews -->
     <h3>Manage Reviews</h3>
     <table>
         <tr>
-            <th>ID</th><th>Name</th><th>Email</th><th>Review</th><th>Rating</th><th>Action</th>
+            <th>ID</th><th>Name</th><th>Email</th><th>Review</th><th>Rating</th><th>Update Review</th><th>Action</th>
         </tr>
         <?php while ($review = mysqli_fetch_assoc($reviews)) { ?>
             <tr>
@@ -114,9 +167,14 @@ $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM revi
                 <td>
                     <form method="post">
                         <input type="hidden" name="review_id" value="<?= htmlspecialchars($review['id']) ?>">
-                        <textarea name="review" required><?= htmlspecialchars($review['review']) ?></textarea>
-                        <input type="number" name="rating" value="<?= htmlspecialchars($review['rating']) ?>" min="1" max="5" required>
+                        <input type="text" name="updated_review" value="<?= htmlspecialchars($review['review']) ?>" required>
                         <button type="submit" name="update_review">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="review_id" value="<?= htmlspecialchars($review['id']) ?>">
+                        <button type="submit" name="delete_review">Delete</button>
                     </form>
                 </td>
             </tr>
