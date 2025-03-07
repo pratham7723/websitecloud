@@ -25,7 +25,9 @@ if (isset($_POST['update_user'])) {
     $new_email = $_POST['new_email'];
     $new_role = $_POST['new_role'];
 
-    mysqli_query($conn, "UPDATE users SET name='$new_name', email='$new_email', role='$new_role' WHERE id=$user_id");
+    $stmt = $conn->prepare("UPDATE users SET name=?, email=?, role=? WHERE id=?");
+    $stmt->bind_param("sssi", $new_name, $new_email, $new_role, $user_id);
+    $stmt->execute();
     header("Location: admin.php");
     exit();
 }
@@ -36,7 +38,9 @@ if (isset($_POST['update_review'])) {
     $updated_review = $_POST['updated_review'];
     $updated_rating = $_POST['updated_rating'];
 
-    mysqli_query($conn, "UPDATE reviews SET review='$updated_review', rating='$updated_rating' WHERE id=$review_id");
+    $stmt = $conn->prepare("UPDATE reviews SET review=?, rating=? WHERE id=?");
+    $stmt->bind_param("sii", $updated_review, $updated_rating, $review_id);
+    $stmt->execute();
     header("Location: admin.php");
     exit();
 }
@@ -79,6 +83,7 @@ $reviews = mysqli_query($conn, $reviews_query) or die(mysqli_error($conn));
         button { padding: 5px 10px; cursor: pointer; background: #007bff; color: white; border: none; }
         input, select { padding: 5px; width: 100%; }
         .search-box { margin-bottom: 15px; }
+        hr { border: 1px solid #ccc; margin: 30px 0; }
     </style>
 </head>
 <body>
@@ -131,6 +136,8 @@ $reviews = mysqli_query($conn, $reviews_query) or die(mysqli_error($conn));
             </tr>
         <?php } ?>
     </table>
+
+    <hr> <!-- Divider for better readability -->
 
     <!-- Search Reviews -->
     <div class="search-box">
