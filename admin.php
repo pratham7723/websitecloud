@@ -18,11 +18,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Handle User Role Update
-if (isset($_POST['update_role'])) {
+// Handle User Update (Name, Email, Role)
+if (isset($_POST['update_user'])) {
     $user_id = $_POST['user_id'];
-    $new_role = $_POST['role'];
-    mysqli_query($conn, "UPDATE users SET role='$new_role' WHERE id=$user_id");
+    $new_name = $_POST['new_name'];
+    $new_email = $_POST['new_email'];
+    $new_role = $_POST['new_role'];
+
+    mysqli_query($conn, "UPDATE users SET name='$new_name', email='$new_email', role='$new_role' WHERE id=$user_id");
     header("Location: admin.php");
     exit();
 }
@@ -32,6 +35,7 @@ if (isset($_POST['update_review'])) {
     $review_id = $_POST['review_id'];
     $updated_review = $_POST['updated_review'];
     $updated_rating = $_POST['updated_rating'];
+
     mysqli_query($conn, "UPDATE reviews SET review='$updated_review', rating='$updated_rating' WHERE id=$review_id");
     header("Location: admin.php");
     exit();
@@ -45,9 +49,17 @@ if (isset($_POST['delete_review'])) {
     exit();
 }
 
-// Fetch users and reviews safely
-$users = mysqli_query($conn, "SELECT id, name, email, role FROM users") or die(mysqli_error($conn));
-$reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM reviews") or die(mysqli_error($conn));
+// Search functionality
+$search_user = isset($_GET['search_user']) ? $_GET['search_user'] : "";
+$search_review = isset($_GET['search_review']) ? $_GET['search_review'] : "";
+
+// Fetch users with search filter
+$users_query = "SELECT id, name, email, role FROM users WHERE name LIKE '%$search_user%' OR email LIKE '%$search_user%'";
+$users = mysqli_query($conn, $users_query) or die(mysqli_error($conn));
+
+// Fetch reviews with search filter
+$reviews_query = "SELECT id, name, email, review, rating FROM reviews WHERE name LIKE '%$search_review%' OR review LIKE '%$search_review%'";
+$reviews = mysqli_query($conn, $reviews_query) or die(mysqli_error($conn));
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +78,7 @@ $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM revi
         th { background-color: #007bff; color: white; }
         button { padding: 5px 10px; cursor: pointer; background: #007bff; color: white; border: none; }
         input, select { padding: 5px; width: 100%; }
+        .search-box { margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -80,30 +93,52 @@ $reviews = mysqli_query($conn, "SELECT id, name, email, review, rating FROM revi
 <div class="container">
     <h2>Admin Dashboard</h2>
 
+    <!-- Search Users -->
+    <div class="search-box">
+        <form method="GET">
+            <input type="text" name="search_user" placeholder="Search User by Name or Email" value="<?= htmlspecialchars($search_user) ?>">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
     <!-- Manage Users -->
     <h3>Manage Users</h3>
     <table>
         <tr>
-            <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Update Role</th>
+            <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Update</th>
         </tr>
         <?php while ($user = mysqli_fetch_assoc($users)) { ?>
             <tr>
                 <td><?= htmlspecialchars($user['id']) ?></td>
-                <td><?= htmlspecialchars($user['name']) ?></td>
-                <td><?= htmlspecialchars($user['email']) ?></td>
                 <td>
                     <form method="post">
                         <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
-                        <select name="role">
+                        <input type="text" name="new_name" value="<?= htmlspecialchars($user['name']) ?>" required>
+                </td>
+                <td>
+                        <input type="email" name="new_email" value="<?= htmlspecialchars($user['email']) ?>" required>
+                </td>
+                <td>
+                        <select name="new_role">
                             <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>User</option>
                             <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
                         </select>
-                        <button type="submit" name="update_role">Update</button>
+                </td>
+                <td>
+                        <button type="submit" name="update_user">Update</button>
                     </form>
                 </td>
             </tr>
         <?php } ?>
     </table>
+
+    <!-- Search Reviews -->
+    <div class="search-box">
+        <form method="GET">
+            <input type="text" name="search_review" placeholder="Search Review by Name or Content" value="<?= htmlspecialchars($search_review) ?>">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
     <!-- Manage Reviews -->
     <h3>Manage Reviews</h3>
