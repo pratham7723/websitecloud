@@ -180,6 +180,21 @@ header .fa-bars{
     display: none;
 }
     </style>
+    <script>
+        // Function to get URL parameters
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+    
+        // Show alert if an error message exists
+        window.onload = function() {
+            let errorMsg = getParameterByName('error');
+            if (errorMsg) {
+                alert(errorMsg); // Show error as a popup
+            }
+        };
+    </script>
 </head>
 <body>
     <!-- header section starts  -->
