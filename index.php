@@ -169,7 +169,7 @@
                 <img src="1.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                 <img src=" 2.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                 <img src=" 3.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -217,7 +217,7 @@
                 <img src=" 4.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                 <img src=" 5.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -249,7 +249,7 @@
                 <img src=" 6.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -265,7 +265,7 @@
                 <img src=" 7.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -281,7 +281,7 @@
                 <img src=" 8.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
@@ -297,7 +297,7 @@
                 <img src=" 9.jpeg" alt="" height="100px" width="250px">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="https://wa.me/message/YR3A3JQXCLA4F1" class="cart-btn">Buy Now</a>
+                    <a href="https://wa.link/0ngy4p" class="cart-btn">Buy Now</a>
                     <a href="#" class="fas fa-share"></a>
                 </div>
             </div>
