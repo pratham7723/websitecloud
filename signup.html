@@ -219,6 +219,7 @@ header .fa-bars{
                     <input type="text" id="name" name="name" onfocus="openeye();" class="ath_login" placeholder="Full Name" required>
                     <br><br>
                     <input type="email" id="mail" name="email" onfocus="openeye();" class="ath_login" placeholder="Email" required>
+                    <span id="emailError" style="color: red; font-size: 12px; display: none;">Invalid email address</span>
                     <br><br>
                     <div class="password_inpt_outer">
                         <input type="password" id="pwdbar" onfocus="closeye();" name="password" class="ath_login" placeholder="Password" required>
@@ -268,6 +269,19 @@ header .fa-bars{
                 hide_eye.classList.add("d-none");
             }
         }
+       
+    document.getElementById("mail").addEventListener("input", function () {
+        let email = this.value;
+        let emailError = document.getElementById("emailError");
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email) && email.length > 0) {
+            emailError.style.display = "block";
+        } else {
+            emailError.style.display = "none";
+        }
+    });
+
     </script>
 
 </body>

@@ -128,101 +128,16 @@
         .d-none {
             display: none;
         }
-        header{
-    position: fixed;
-    top:0; left:0; right:0;
-    background:#fff;
-    padding:0.5rem 9%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 1000;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-}
 
-header .logo{
-    font-size: 3rem;
-    color:#333;
-    font-weight: bolder;
-}
-
-header .navbar a{
-    font-size: 1.5rem;
-    padding:0 1.5rem;
-    color:#666;
-}
-
-header .navbar a:hover{
-    color:cadetblue;
-}
-
-header .icons a{
-    font-size: 1.5rem;
-    color:#333;
-    margin-left: 1.5rem;
-}
-
-header .icons a:hover{
-    color:cadetblue;
-}
-
-header #toggler{
-    display: none;
-}
-
-header .fa-bars{
-    font-size: 1.5rem;
-    color:#333;
-    border-radius: .5rem;
-    padding:.5rem 1.5rem;
-    cursor: pointer;
-    border:.1rem solid rgba(0,0,0,.3);
-    display: none;
-}
-    </style>
-    <script>
-        // Function to get URL parameters
-        function getParameterByName(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
+        #emailError {
+            color: red;
+            font-size: 12px;
+            display: none;
+            margin-top: 5px;
         }
-    
-        // Show alert if an error message exists
-        window.onload = function() {
-            let errorMsg = getParameterByName('error');
-            if (errorMsg) {
-                alert(errorMsg); // Show error as a popup
-            }
-        };
-    </script>
+    </style>
 </head>
 <body>
-    <!-- header section starts  -->
-
-    <header class="animate">
-        <input type="checkbox" name="" id="toggler">
-        <label for="toggler" class="fas fa-bars"></label>
-    
-        <a href="index.php" class="logo"><img src="shopy cloud logo.png" height="70px" width="120px"></a>
-    
-        <nav class="navbar">
-            <a href="index.php#home">home</a>
-            <a href="index.php#about">about</a>
-            <a href="index.php#products">products</a>
-            <a href="index.php#reviews">reviews</a>
-            <a href="contact.html">contact</a>
-            <a href="F&Q.html">F&Q</a>
-        </nav>
-    
-        <div class="icons">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-shopping-cart"></a>
-            <a href="login.html" class="fas fa-user"></a>
-        </div>
-    
-    </header>
-
-<!-- header section ends -->
 
     <div class="maincontainer_outer">
         <div class="ath_monkey_login">
@@ -232,6 +147,7 @@ header .fa-bars{
             <div class="form_outer">
                 <form action="login.php" method="POST">
                     <input type="email" id="mail" name="email" onfocus="openeye();" class="ath_login" placeholder="Email" required>
+                    <span id="emailError">Invalid email address</span>
                     <br><br>
                     <div class="password_inpt_outer">
                         <input type="password" id="pwdbar" onfocus="closeye();" name="password" class="ath_login" placeholder="Password" required>
@@ -281,6 +197,19 @@ header .fa-bars{
                 hide_eye.classList.add("d-none");
             }
         }
+
+        // Real-time email validation
+        document.getElementById("mail").addEventListener("input", function () {
+            let email = this.value;
+            let emailError = document.getElementById("emailError");
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email) && email.length > 0) {
+                emailError.style.display = "block";
+            } else {
+                emailError.style.display = "none";
+            }
+        });
     </script>
 
 </body>
